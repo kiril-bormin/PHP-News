@@ -1,0 +1,21 @@
+name: 🚀 Déploiement Infomaniak
+on:
+  push:
+    branches:
+      - main # Se déclenche quand tu pousses sur la branche main
+
+jobs:
+  web-deploy:
+    name: 🚚 Sync Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ./ # Envoie les fichiers à la racine du dossier FTP
